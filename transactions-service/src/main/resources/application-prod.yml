@@ -1,0 +1,37 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+logging:
+  level:
+    root: WARN
+    com.gdb.transactions: INFO
+
+# Transfer Limits Configuration
+transfer:
+  limits:
+    premium:
+      daily-limit: 100000.00
+      transaction-limit: 100
+    gold:
+      daily-limit: 50000.00
+      transaction-limit: 50
+    silver:
+      daily-limit: 50000.00
+      transaction-limit: 10
+
+# MOD5-BUG-01: Banking limits mapping target property
+banking:
+  limits:
+    daily-max: 50000.00

@@ -1,0 +1,37 @@
+server:
+  port: 8002
+
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gdb_transactions_db}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:dominicroot}
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+logging:
+  level:
+    root: DEBUG
+    com.gdb.transactions: DEBUG
+
+# Transfer Limits Configuration (relaxed for dev testing)
+transfer:
+  limits:
+    premium:
+      daily-limit: 100000.00
+      transaction-limit: 100
+    gold:
+      daily-limit: 50000.00
+      transaction-limit: 50
+    silver:
+      daily-limit: 50000.00
+      transaction-limit: 10
+
+# MOD5-BUG-01: Banking limits mapping target property
+banking:
+  limits:
+    daily-max: 50000.00
