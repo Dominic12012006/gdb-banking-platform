@@ -1,0 +1,270 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: ghcr.io/dominic12012006/gdb-auth-service:latest
+          ports:
+            - containerPort: 8004
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://auth-db:5432/gdb_auth_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - port: 8004
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+        - name: users-service
+          image: ghcr.io/dominic12012006/gdb-users-service:latest
+          ports:
+            - containerPort: 8003
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://users-db:5432/gdb_users_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: users-service
+  ports:
+    - port: 8003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - name: account-service
+          image: ghcr.io/dominic12012006/gdb-account-service:latest
+          ports:
+            - containerPort: 8001
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://accounts-db:5432/gdb_accounts_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: account-service
+  ports:
+    - port: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions-service
+  template:
+    metadata:
+      labels:
+        app: transactions-service
+    spec:
+      containers:
+        - name: transactions-service
+          image: ghcr.io/dominic12012006/gdb-transactions-service:latest
+          ports:
+            - containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://transactions-db:5432/gdb_transactions_db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactions-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: transactions-service
+  ports:
+    - port: 8002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-gateway-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-gateway-service
+  template:
+    metadata:
+      labels:
+        app: payment-gateway-service
+    spec:
+      containers:
+        - name: payment-gateway-service
+          image: ghcr.io/dominic12012006/gdb-payment-gateway-service:latest
+          ports:
+            - containerPort: 8008
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-gateway-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: payment-gateway-service
+  ports:
+    - port: 8008
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aadhar-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aadhar-service
+  template:
+    metadata:
+      labels:
+        app: aadhar-service
+    spec:
+      containers:
+        - name: aadhar-service
+          image: ghcr.io/dominic12012006/gdb-aadhar-service:latest
+          ports:
+            - containerPort: 8005
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aadhar-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: aadhar-service
+  ports:
+    - port: 8005
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: company-service
+  namespace: gdb-banking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company-service
+  template:
+    metadata:
+      labels:
+        app: company-service
+    spec:
+      containers:
+        - name: company-service
+          image: ghcr.io/dominic12012006/gdb-company-service:latest
+          ports:
+            - containerPort: 8006
+          envFrom:
+            - configMapRef:
+                name: gdb-config
+            - secretRef:
+                name: gdb-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: company-service
+  namespace: gdb-banking
+spec:
+  selector:
+    app: company-service
+  ports:
+    - port: 8006

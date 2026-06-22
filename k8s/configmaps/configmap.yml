@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gdb-config
+  namespace: gdb-banking
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  EUREKA_URL: "http://eureka-server:8761/eureka"
+  AUTH_SERVICE_URL: "http://auth-service:8004"
+  ACCOUNT_SERVICE_URL: "http://account-service:8001"
+  USERS_SERVICE_URL: "http://users-service:8003"
+  TRANSACTIONS_SERVICE_URL: "http://transactions-service:8002"
+  AADHAR_SERVICE_URL: "http://aadhar-service:8005"
+  COMPANY_SERVICE_URL: "http://company-service:8006"
+  PAYMENT_SERVICE_URL: "http://payment-gateway-service:8008"
